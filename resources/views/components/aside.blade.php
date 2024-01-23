@@ -105,7 +105,7 @@
                     <ul class="menu-subnav">
                         <li class="menu-item menu-item-parent" aria-haspopup="true">
                             <span class="menu-link">
-                                <span class="menu-text">List-Stock</span>
+                                <span class="menu-text">Liste-Stock</span>
                             </span>
                         </li>
                         <li class="menu-item menu-item-submenu" aria-haspopup="true"
@@ -114,7 +114,7 @@
                                 <i class="menu-bullet menu-bullet-dot">
                                     <span></span>
                                 </i>
-                                <span class="menu-text">List-Stock</span>
+                                <span class="menu-text">Liste-Stock</span>
                             </a>
                         </li>
                         <li class="menu-item menu-item-submenu" aria-haspopup="true"
@@ -167,7 +167,7 @@
                                             <i class="menu-bullet menu-bullet-dot">
                                                 <span></span>
                                             </i>
-                                            <span class="menu-text">List-sortie</span>
+                                            <span class="menu-text">Liste-sortie</span>
                                         </a>
                                     </li>
                                     <li class="menu-item" aria-haspopup="true">
@@ -234,7 +234,7 @@
                                 <i class="menu-bullet menu-bullet-dot">
                                     <span></span>
                                 </i>
-                                <span class="menu-text">List-Membres</span>
+                                <span class="menu-text">Liste-Membres</span>
                             </a>
                         </li>
                     </ul>

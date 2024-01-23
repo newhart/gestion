@@ -13,9 +13,9 @@ class AchatController extends Controller
         return view('achats.index');
     }
 
-    public function create(Bonde $bonde , string $type): View
+    public function create(Bonde $bonde, string $type): View
     {
-        return view('achats.create' , compact('bonde', 'type'));
+        return view('achats.create', compact('bonde', 'type'));
     }
 
     public function new(): View
@@ -25,6 +25,6 @@ class AchatController extends Controller
 
     public function choice(): View
     {
-        return view('achats.choice');
+        return view('bondes.create', ['type' => 'entry']);
     }
 }

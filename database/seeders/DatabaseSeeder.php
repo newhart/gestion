@@ -17,12 +17,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // $this->migrateProduct();
-        \App\Models\User::factory()->create([
-            'name' => 'Admin',
-            'email' => 'admin@shop.com',
-            // password => 'password'
-        ]);
+        // \App\Models\User::factory()->create([
+        //     'name' => 'Admin',
+        //     'email' => 'admin@shop.com',
+        //     // password => 'password'
+        // ]);  migraion laravel vue js comment faire une pagination ==> haritiana randria
+        $this->migrateProduct();
     }
 
     private function migrateProduct()

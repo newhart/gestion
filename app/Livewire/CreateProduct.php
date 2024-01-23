@@ -54,15 +54,15 @@ class CreateProduct extends Component implements HasForms
     {
         $data = $this->form->getState();
         $category = Category::find((int)$data['category']);
-        $company = Company::find((int)$data['company']);
-        if ($category && $company) {
+        // $company = Company::find((int)$data['company']);
+        if ($category) {
             $data['category_id'] = $category->id;
-            $data['company_id'] = $company->id;
+            // $data['company_id'] = $company->id;
         }
         $data['price'] = 0;
-        $data['stock_quantity'] = 0 ;
+        $data['stock_quantity'] = 0;
         unset($data['category']);
-        unset($data['company']);
+        // unset($data['company']);
         $product =  Product::create($data);
         $this->form->model($product)->saveRelationships();
         return redirect()->route('products.list')->with('success', 'Product created with success');

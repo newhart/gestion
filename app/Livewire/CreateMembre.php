@@ -30,7 +30,7 @@ class CreateMembre extends Component implements HasForms
         $data['type'] = 'User';
         $membre =  User::create($data);
         $this->form->model($membre)->saveRelationships();
-        return redirect()->route('membres.list')->with('success', 'Product created with success');
+        return redirect()->route('membres.list')->with('success', 'Membre  ajouter avec success');
     }
 
     public function render()
@@ -49,8 +49,8 @@ class CreateMembre extends Component implements HasForms
                             ->placeholder('Ajouter le nom du membre')
                             ->required(),
                         TextInput::make('email')
-                            ->label('Email')
-                            ->placeholder('Ajouter l email du membre')
+                            ->label('Indetifiant')
+                            ->placeholder('Ajouter une Indetifiant')
                             ->required(),
                         Select::make('role')
                             ->options([

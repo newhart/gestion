@@ -24,7 +24,7 @@ class ListProducts extends Component implements HasForms, HasTable
             ->query(Product::query())
             ->columns([
                 TextColumn::make('name')
-                    ->label('Nom de la produit')
+                    ->label('Nom du produit')
                     ->searchable(),
                 TextColumn::make('stock_quantity')
                     ->label('Quantité'),

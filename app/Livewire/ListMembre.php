@@ -24,7 +24,7 @@ class ListMembre extends Component implements HasForms, HasTable
             ->query(User::query())
             ->columns([
                 TextColumn::make('name')->label('Nom')->searchable(),
-                TextColumn::make('email')->searchable()
+                TextColumn::make('email')->label('Indetifiant')->searchable()
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([

@@ -34,12 +34,10 @@ class CreateBonde extends Component implements HasForms
     public function submit()
     {
         $data = $this->form->getState();
-        $data['status'] = false ;
-        $data['type'] = $this->type ;
-       $bonde =  Bonde::create($data);
-
-        return redirect()->route('achats.create',['bonde' => $bonde ,  'type' => $this->type])->with('success', 'Product created with success');
-
+        $data['status'] = false;
+        $data['type'] = $this->type;
+        $bonde =  Bonde::create($data);
+        return redirect()->route('achats.create', ['bonde' => $bonde,  'type' => $this->type])->with('success', 'Product created with success');
     }
 
     public function form(Form $form): Form

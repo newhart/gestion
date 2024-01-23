@@ -39,16 +39,17 @@ class CreateSorty extends Component  implements HasForms
     public function submit()
     {
         $data = $this->form->getState();
-        $product  = Product::find($data['product']);
-        if($product){
+        $product  = Product::find($data['product'])->load('category');
+        if ($product) {
             if ((int) $data['quantity'] >  $product->stock_quantity) {
                 $this->dispatch('alert', type: 'error', message: 'Nombre de stock insuffisante');
                 return false;
             }
             $this->data[] = [
-                'product_name' => $product->name ,
+                'product_name' => $product->name,
                 'quantity' => $data['quantity'],
-                'product_id' => $product->id
+                'product_id' => $product->id,
+                'category' => $product->category->name
             ];
         }
         $this->dispatch('up', $this->data);
