@@ -26,7 +26,7 @@
                             class="opacity-70">{{ \Carbon\Carbon::parse($bonde->created_at)->format('M d, Y') }}</span>
                     </div>
                     <div class="d-flex flex-column flex-root">
-                        <span class="font-weight-bolder mb-2">Bande de livraison : </span>
+                        <span class="font-weight-bolder mb-2">Bon de livraison : </span>
                         <span class="opacity-70">{{ $bonde->num }}</span>
                     </div>
 

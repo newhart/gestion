@@ -10,7 +10,7 @@
                 data-dismiss="modal">Annuler</button>
             <button wire:click.prevent="new_product" type="button"
                 class="btn bg-gray-500 font-weight-bold mt-3 mx-3 text-white" data-toggle="modal"
-                data-target="#create">Nouveaux</button>
+                data-target="#create">Nouveau</button>
         </div>
     </form>
 

@@ -26,13 +26,13 @@ class ListEntry extends Component implements HasForms, HasTable
     {
 
         return $table
-            ->query(Bonde::query()->where('type' , 'entry')->whereHas('entries'))
+            ->query(Bonde::query()->where('type', 'entry')->whereHas('entries'))
             ->columns([
                 TextColumn::make('num')
-                    ->label('Numéro de la bande de livraison')
+                    ->label('Numéro du bon de livraison')
                     ->searchable(),
                 IconColumn::make('status')
-                    ->label('Statuts de validation')
+                    ->label('Statut de validation')
                     ->boolean(),
                 TextColumn::make('created_at')
                     ->label("Date d'entrée")
@@ -53,26 +53,25 @@ class ListEntry extends Component implements HasForms, HasTable
                     ->color('success')
                     ->action(function (Bonde $bonde) {
                         $bonde  = Bonde::where('id', $bonde->id)
-                            ->with(['entries'=> function($query){
-                            $query->with('product');
-                        }])->first();
+                            ->with(['entries' => function ($query) {
+                                $query->with('product');
+                            }])->first();
                         foreach ($bonde->entries as $entry) {
                             $product = Product::find($entry->product_id);
-                            if($product){
-                                $product->stock_quantity += $entry->quantity ; // augementer la qty
+                            if ($product) {
+                                $product->stock_quantity += $entry->quantity; // augementer la qty
                                 $product->save();
                             }
                         }
-                        $bonde->status = true ; // change status to validated
+                        $bonde->status = true; // change status to validated
                         $bonde->save();
                         $this->dispatch('alert', type: 'success', message: 'Validation fait avec success');
                     }),
                 Action::make('Détail')
                     ->button()
                     ->icon('heroicon-o-user')
-                    ->modalContent(function(Bonde $bonde)
-                    {
-                        $bonde = Bonde::where('id', $bonde->id)->with(['entries' => function($query){
+                    ->modalContent(function (Bonde $bonde) {
+                        $bonde = Bonde::where('id', $bonde->id)->with(['entries' => function ($query) {
                             $query->with('product');
                         }])->first();
 

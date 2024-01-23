@@ -25,10 +25,10 @@ class ListArchive extends Component implements HasForms, HasTable
     {
 
         return $table
-            ->query(Bonde::query()->where('status' , true))
+            ->query(Bonde::query()->where('status', true))
             ->columns([
                 TextColumn::make('num')
-                    ->label('Numéro de la bande')
+                    ->label('Numéro du BL')
                     ->searchable(),
                 TextColumn::make('type')
                     ->searchable(),
@@ -47,28 +47,27 @@ class ListArchive extends Component implements HasForms, HasTable
                     ->color('danger')
                     ->modalIcon('heroicon-o-trash')
                     ->action(fn (Bonde $bonde) => $bonde->delete()),
-//                Action::make('pdf')
-//                    ->label('Telecharger')
-//                    ->icon('heroicon-o-arrow-down-tray')
-//                    ->color('success')
-//                    ->action(function (Bonde $record) {
-//                        return response()->streamDownload(function () use ($record) {
-//                            echo Pdf::loadHtml(
-//                                Blade::render('invoice', ['record' => $record])
-//                            )
-//                                ->setPaper('a4', 'landscape')
-//                                ->stream();
-//                        }, 'invoice' . '.pdf');
-//                    }),
+                //                Action::make('pdf')
+                //                    ->label('Telecharger')
+                //                    ->icon('heroicon-o-arrow-down-tray')
+                //                    ->color('success')
+                //                    ->action(function (Bonde $record) {
+                //                        return response()->streamDownload(function () use ($record) {
+                //                            echo Pdf::loadHtml(
+                //                                Blade::render('invoice', ['record' => $record])
+                //                            )
+                //                                ->setPaper('a4', 'landscape')
+                //                                ->stream();
+                //                        }, 'invoice' . '.pdf');
+                //                    }),
 
                 Action::make('Detail')
                     ->button()
                     ->icon('heroicon-o-user')
-                    ->modalContent(function(Bonde $bonde)
-                    {
-                        $bonde = Bonde::where('id', $bonde->id)->with(['sorties' => function($query){
+                    ->modalContent(function (Bonde $bonde) {
+                        $bonde = Bonde::where('id', $bonde->id)->with(['sorties' => function ($query) {
                             $query->with('product');
-                        }, 'entries' => function($query){
+                        }, 'entries' => function ($query) {
                             $query->with('product');
                         }])->first();
 
