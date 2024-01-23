@@ -42,24 +42,26 @@ class AddNewEntry extends Component
     public function click()
     {
         foreach ($this->data as $valid) {
-            if ($this->type === 'entry') {
-                Entry::create([
-                    'bonde_id' => $this->bonde->id,
-                    'quantity' => $valid['quantity'],
-                    'product_id' => $valid['product_id'],
-                    'date_achat' => now(),
-                    'status' => false,
-                ]);
-            } else {
-                Sorty::create([
-                    'bonde_id' => $this->bonde->id,
-                    'quantity' => $valid['quantity'],
-                    'product_id' => $valid['product_id'],
-                    'client_name' => 'test',
-                    'price' => 0,
-                    'status' => false,
-                    'date_vente' => now(),
-                ]);
+            if (gettype($valid) === 'array') {
+                if ($this->type === 'entry') {
+                    Entry::create([
+                        'bonde_id' => $this->bonde->id,
+                        'quantity' => $valid['quantity'],
+                        'product_id' => $valid['product_id'],
+                        'date_achat' => now(),
+                        'status' => false,
+                    ]);
+                } else {
+                    Sorty::create([
+                        'bonde_id' => $this->bonde->id,
+                        'quantity' => $valid['quantity'],
+                        'product_id' => $valid['product_id'],
+                        'client_name' => 'test',
+                        'price' => 0,
+                        'status' => false,
+                        'date_vente' => now(),
+                    ]);
+                }
             }
         }
 

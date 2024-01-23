@@ -90,11 +90,16 @@
                             </thead>
                             <tbody>
                                 @foreach ($data as $item)
-                                    <tr class="font-weight-boldest">
-                                        <td class="pl-0 pt-7">{{ $item['product_name'] }}</td>
-                                        <td class="pl-0 pt-7">{{ $item['category'] }}</td>
-                                        <td class="text-right pt-7">{{ $item['quantity'] }}</td>
-                                    </tr>
+                                    @if (gettype($item) === 'array')
+                                        <tr class="font-weight-boldest">
+                                            <td class="pl-0 pt-7">
+                                                {{ gettype($item) === 'array' ? $item['product_name'] : 'peding' }}</td>
+                                            <td class="pl-0 pt-7">
+                                                {{ gettype($item) === 'array' ? $item['category'] : 'peding' }}</td>
+                                            <td class="text-right pt-7">
+                                                {{ gettype($item) === 'array' ? $item['quantity'] : 'peding' }}</td>
+                                        </tr>
+                                    @endif
                                 @endforeach
 
                             </tbody>

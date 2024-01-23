@@ -8,7 +8,8 @@
             </button>
             <button type="button" class="btn btn-light-primary font-weight-bold mt-3"
                 data-dismiss="modal">Annuler</button>
-            <button type="button" class="btn bg-gray-500 font-weight-bold mt-3 mx-3 text-white" data-toggle="modal"
+            <button wire:click.prevent="new_product" type="button"
+                class="btn bg-gray-500 font-weight-bold mt-3 mx-3 text-white" data-toggle="modal"
                 data-target="#create">Nouveaux</button>
         </div>
     </form>
