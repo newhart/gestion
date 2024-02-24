@@ -7,16 +7,12 @@ use App\Models\Category;
 use App\Models\Company;
 use App\Models\Entry;
 use App\Models\Product;
-use DragonCode\Support\Facades\Helpers\Boolean;
-use Filament\Forms\Components\DateTimePicker;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Livewire\Component;
-use PhpParser\Node\Expr\Cast\Bool_;
 
 class CreateEntry extends Component implements HasForms
 {
@@ -25,9 +21,20 @@ class CreateEntry extends Component implements HasForms
 
     public ?array $data = [];
     public   $is_new = false;
-    public function mount(): void
+    public $bonde_id = null;
+    public $is_update = false;
+    public function mount($item, $bonde_id): void
     {
-        $this->form->fill();
+        $this->bonde_id = $bonde_id;
+        if ($item && $this->is_new === false) {
+            $this->form->fill([
+                'quantity' => $item['quantity'],
+                'product' => $item['product_id']
+            ]);
+            $this->is_update = true;
+        } else {
+            $this->form->fill();
+        }
     }
 
     public function form(Form $form): Form
@@ -72,29 +79,10 @@ class CreateEntry extends Component implements HasForms
         $this->is_new = true;
     }
 
-    private function convertArray($array)
-    {
-        $result = [];
-        foreach ($array as $key => $value) {
-            if (is_array($value)) {
-                // Appel récursif si la valeur est un tableau
-                $result = array_merge($result, $this->convertArray($value));
-            } else {
-                // Supprimer le préfixe numérique (0 =>)
-                $newKey = is_numeric($key) ? "" : $key;
-                // Ajouter à $result
-                $result[$newKey] = $value;
-            }
-        }
-        return $result;
-    }
-
     public function submit()
     {
         $data = $this->form->getState();
-        $current_quantity  = 0;
         if ($this->is_new) {
-            $current_quantity = $data['stock_quantity'];
             $data['stock_quantity'] = 0;
             $product_new  = Product::create($data);
             $product = $product_new->load('category');
@@ -103,16 +91,28 @@ class CreateEntry extends Component implements HasForms
         }
 
         if ($product) {
-            $this->data[] = [
-                'product_name' => $product->name,
-                'quantity' => $this->is_new ? $current_quantity :  $data['quantity'],
-                'product_id' => $product->id,
-                'category' => $product->category->name
-            ];
+            $entry = Entry::where('product_id', $product->id)->where('bonde_id', $this->bonde_id)->first();
+
+            if ($entry) {
+                $entry->product_id = $product->id;
+                $entry->quantity = $data['quantity'];
+                $entry->save();
+            } else {
+                Entry::create([
+                    'bonde_id' => $this->bonde_id,
+                    'quantity' => $data['quantity'],
+                    'product_id' => $product->id,
+                    'status' => false,
+                    'date_achat' => now(),
+                ]);
+            }
+
+            $datas = Entry::where('bonde_id', $this->bonde_id)->with('product.category')->latest()->get();
         }
-        $this->dispatch('up', $this->data);
+        $this->dispatch('up',  $datas);
         $this->form->fill();
         $this->is_new = false;
+        $this->is_update = false;
     }
 
     public function render()

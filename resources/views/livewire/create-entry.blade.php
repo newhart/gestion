@@ -4,7 +4,11 @@
 
         <div class="flex justify-end">
             <button type="submit" class="btn btn-primary mt-3 mx-3">
-                Ajouter
+               @if ($is_update)
+                   Modifier
+               @else
+                   Valider
+               @endif
             </button>
             <button type="button" class="btn btn-light-primary font-weight-bold mt-3"
                 data-dismiss="modal">Annuler</button>

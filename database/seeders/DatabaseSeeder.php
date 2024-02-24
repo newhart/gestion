@@ -20,46 +20,47 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory()->create([
         //     'name' => 'Admin',
         //     'email' => 'admin@shop.com',
-        //     // password => 'password'
-        // ]);  migraion laravel vue js comment faire une pagination ==> haritiana randria
+        //      'password' => 'password'
+        // ]);
         $this->migrateProduct();
     }
 
     private function migrateProduct()
     {
-        $products =  CsvService::readCSV('app/producs.csv');
+        $products =  CsvService::readCSV('app/products.csv');
 
         foreach ($products as $product) {
-            $category = $this->findOrCreateCategory($product['ItemGroup']);
-            $company = $this->findOrCreateCompany($product['ItemCompany']);
+            $category = $this->findOrCreateCategory($product['Nom Famille Père du Produit'], $product['Nom Famille Produit']);
             Product::create([
-                'name' => $product['ItemName'],
+                'name' => $product['Nom du Produit'],
                 'category_id' => $category->id,
-                'company_id' => $company->id,
-                'code' => $product['ItemCode'],
-                'price' => $product['ItemPPrice'] !== 'NULL' ? $product['ItemPPrice'] :  0.00,
-                'stock_quantity' => 1,
-                'stock_alert' => $product['ItemReqLimit'],
-                'notes' => $product['ItemNote']
+                'code' => $product['IDproduit'],
+                'price' => $product['Prix de Vente'] && $product['Prix de Vente'] !== 'NULL' ? $this->formatPrice($product['Prix de Vente']) :  0.00,
+                'stock_quantity' =>  (int)preg_replace('/[^0-9.]/', '', $product['Stock']),
+                'stock_alert' => 5,
             ]);
         }
     }
 
-    private function findOrCreateCategory(string $category_name)
+    private function formatPrice($price)
     {
-        $category  = Category::where('name', $category_name)->first();
-        if (!$category) {
-            $category = Category::create(['name' => $category_name]);
-        }
-        return $category;
+        return (float)preg_replace('/[^0-9.]/', '', $price);
     }
 
-    private function findOrCreateCompany(string $company_name)
+    private function findOrCreateCategory(string $category_name, string $sub_category_name)
     {
-        $company  = Company::where('name', $company_name)->first();
-        if (!$company) {
-            $company = Company::create(['name' => $company_name]);
+        $category  = Category::where('name', $category_name)->first();
+        $sub_category = null;
+        if (!$category) {
+            $category = Category::create(['name' => $category_name]);
+            $sub_category = Category::where('name', $sub_category_name)->where('category_id', $category->id)->first();
+            if (!$sub_category) {
+                $sub_category = Category::create([
+                    'name' => $sub_category_name,
+                    'category_id' => $category->id
+                ]);
+            }
         }
-        return $company;
+        return $category;
     }
 }

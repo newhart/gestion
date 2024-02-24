@@ -64,9 +64,9 @@
                     </div>
                     <div class="modal-body">
                         @if ($type === 'entry')
-                            @livewire('create-entry')
+                            @livewire('create-entry' , ['item' => false , 'bonde_id' => $idBonde])
                         @else
-                            @livewire('create-sorty')
+                            @livewire('create-sorty' , ['item' => false , 'bondeId' => $idBonde])
                         @endif
 
                     </div>
@@ -86,19 +86,47 @@
                                     <th class="pl-0 font-weight-bold text-muted text-uppercase">Nom du produit</th>
                                     <th class="pl-0 font-weight-bold text-muted text-uppercase">Catégorie</th>
                                     <th class="text-right font-weight-bold text-muted text-uppercase">Quantité</th>
+                                    <th class="pl-0  text-right font-weight-bold text-muted text-uppercase">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($data as $item)
+                                @foreach ($data as  $item)
                                     @if (gettype($item) === 'array')
                                         <tr class="font-weight-boldest">
                                             <td class="pl-0 pt-7">
-                                                {{ gettype($item) === 'array' ? $item['product_name'] : 'peding' }}</td>
+                                                {{ $item['product']['name']}}</td>
                                             <td class="pl-0 pt-7">
-                                                {{ gettype($item) === 'array' ? $item['category'] : 'peding' }}</td>
+                                                {{$item['product']['category']['name']}}
                                             <td class="text-right pt-7">
-                                                {{ gettype($item) === 'array' ? $item['quantity'] : 'peding' }}</td>
+                                                {{$item['quantity']}}
+                                            <td class="pl-0 pt-7">
+                                            <td class="pl-0 pt-7 flex px-4 gap-2">
+                                                <button class="btn btn-success" data-toggle="modal"
+                                                data-target="#exampleModalLong{{$item['id']}}" >Modifier</button>
+                                                <button class="btn btn-danger" type="button" wire:click.prevent="delete({{$item['id']}})">Supprimer</button>
+                                            </td>
                                         </tr>
+                                        <div class="modal fade" id="exampleModalLong{{$item['id']}}" data-backdrop="static" tabindex="-1" role="dialog"
+                                        aria-labelledby="staticBackdrop" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Modification d'un produit</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <i aria-hidden="true" class="ki ki-close"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    @if ($type === 'entry')
+                                                        @livewire('create-entry' , ['item' => $item , 'bonde_id' => $idBonde])
+                                                    @else
+                                                        @livewire('create-sorty' , ['item' => $item , 'bondeId' => $idBonde])
+                                                    @endif
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     @endif
                                 @endforeach
 

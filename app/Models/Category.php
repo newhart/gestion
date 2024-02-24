@@ -20,12 +20,12 @@ class Category extends Model
 
     public function childrenCategories(): BelongsTo
     {
-        return $this->belongsTo(Category::class , 'category_id')->with('categories');
+        return $this->belongsTo(Category::class , 'category_id')->with('categories'); // get all children categories
     }
 
     public function categories(): HasMany
     {
-        return $this->hasMany(Category::class , 'category_id')->whereNull('category_id');
+        return $this->hasMany(Category::class , 'category_id')->whereNull('category_id'); // get the parent category
     }
 
     public function sorties(): HasMany

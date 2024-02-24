@@ -34,7 +34,7 @@ class ListSorty extends Component implements HasForms, HasTable
     {
 
         return $table
-            ->query(Bonde::query()->where('type' , 'sorty')->whereHas('sorties'))
+            ->query(Bonde::query()->where('type' , 'sorty')->where('is_confirm' , true)->whereHas('sorties'))
             ->columns([
                 TextColumn::make('num')
                     ->label('Numéro de la bande de livraison')

@@ -17,9 +17,21 @@ class CreateSorty extends Component  implements HasForms
 {
     use InteractsWithForms;
     public ?array $data = [];
-    public function mount(): void
+    // create attribute boolean
+    public $is_update = false;
+    public $bonde_id = null ;
+    public function mount($item , $bondeId): void
     {
-        $this->form->fill();
+        if($item){
+            $this->form->fill([
+                'quantity' => $item['quantity'] ,
+                'product' => $item['product_id']
+            ]);
+            $this->is_update = true;
+        }else {
+            $this->form->fill();
+        }
+        $this->bonde_id = $bondeId ;
     }
     public function form(Form $form): Form
     {
@@ -27,8 +39,10 @@ class CreateSorty extends Component  implements HasForms
             ->schema([
                 Select::make('product')
                     ->searchable()
+                    ->required()
                     ->relationship('product',  'name'),
                 TextInput::make('quantity')
+                    ->required()
                     ->label('quantité')
                     ->numeric()
                     ->placeholder('Nombre de produit'),
@@ -45,15 +59,28 @@ class CreateSorty extends Component  implements HasForms
                 $this->dispatch('alert', type: 'error', message: 'Nombre de stock insuffisante');
                 return false;
             }
-            $this->data[] = [
-                'product_name' => $product->name,
-                'quantity' => $data['quantity'],
-                'product_id' => $product->id,
-                'category' => $product->category->name
-            ];
+            $sorty = Sorty::where('product_id' , $product->id)->where('bonde_id' , $this->bonde_id)->first();
+            if($sorty){
+                $sorty->product_id = $product->id;
+                $sorty->quantity = $data['quantity'];
+                $sorty->save();
+            }else {
+                Sorty::create([
+                    'bonde_id' => $this->bonde_id,
+                    'quantity' => $data['quantity'],
+                    'product_id' => $product->id,
+                    'client_name' => 'test',
+                    'price' => 0,
+                    'status' => false,
+                    'date_vente' => now(),
+                ]);
+            }
+            $datas = Sorty::where('bonde_id' , $this->bonde_id)->with('product.category')->latest()->get();
         }
-        $this->dispatch('up', $this->data);
+        $this->dispatch('up', $datas);
         $this->form->fill();
+        $this->is_update = false ;
+        return redirect()->to(route('achats.create' , ['bonde' => $this->bonde_id  , 'type' => 'sotry']));
     }
     public function render()
     {

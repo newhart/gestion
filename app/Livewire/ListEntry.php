@@ -26,7 +26,7 @@ class ListEntry extends Component implements HasForms, HasTable
     {
 
         return $table
-            ->query(Bonde::query()->where('type', 'entry')->whereHas('entries'))
+            ->query(Bonde::query()->where('type', 'entry')->where('is_confirm' , true)->whereHas('entries'))
             ->columns([
                 TextColumn::make('num')
                     ->label('Numéro du bon de livraison')
