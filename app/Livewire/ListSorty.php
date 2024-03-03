@@ -114,7 +114,13 @@ class ListSorty extends Component implements HasForms, HasTable
                         }])->first();
 
                         return view('modal.index', compact('bonde'));
-                    })->modalSubmitAction(false)
+                    })->modalSubmitAction(false) ,
+                 Action::make('Modifier')
+                     ->url(fn (Bonde $record): string => route('achats.create', ['bonde' => $record , 'type' => 'sorty']))
+                     ->openUrlInNewTab(false)
+                     ->button()
+                     ->disabled(fn (Bonde $bonde) => $bonde->status)
+                     ->openUrlInNewTab()
             ])
             ->bulkActions([
                 // ...
