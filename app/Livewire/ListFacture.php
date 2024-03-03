@@ -59,7 +59,16 @@ class ListFacture extends Component implements HasForms, HasTable
                     {
                         $facture = Facture::where('id', $facture->id)->with('contents')->first();
                         return view('modal.facture', compact('facture'));
-                    })->modalSubmitAction(false)
+                    })->modalSubmitAction(false),
+                Action::make('delete')
+                     ->button()
+                     ->icon('heroicon-o-trash')
+                     ->hidden(auth()->user()->role !== 'Admin')
+                     ->requiresConfirmation()
+                     ->label('supprimer')
+                     ->color('danger')
+                     ->modalIcon('heroicon-o-trash')
+                     ->action(fn (Facture $record) => $record->delete()),
             ])
             ->bulkActions([
                 // ...
