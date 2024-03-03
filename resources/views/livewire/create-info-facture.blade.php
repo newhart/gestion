@@ -107,7 +107,7 @@
         <div class="row justify-content-center py-8 px-8 py-md-10 px-md-0" id="footer-pdf">
             <div class="col-md-9">
                 <div class="d-flex justify-content-between">
-                    {{--                    <button type="button" class="btn btn-light-primary font-weight-bold" wire:click.prevent="down({{$facture}})">Telecharger</button> --}}
+                    <a href="{{route('factures.index')}}" class="btn btn-light-primary font-weight-bold">Valider</a>
                     <button type="button" class="btn btn-primary font-weight-bold"
                         onclick="window.print()">Imprimer</button>
                 </div>
