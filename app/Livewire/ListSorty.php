@@ -119,6 +119,8 @@ class ListSorty extends Component implements HasForms, HasTable
                      ->url(fn (Bonde $record): string => route('achats.create', ['bonde' => $record , 'type' => 'sorty']))
                      ->openUrlInNewTab(false)
                      ->button()
+                     ->icon('heroicon-o-pencil')
+                     ->color('info')
                      ->disabled(fn (Bonde $bonde) => $bonde->status)
                      ->openUrlInNewTab()
             ])

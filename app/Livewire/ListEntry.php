@@ -81,6 +81,8 @@ class ListEntry extends Component implements HasForms, HasTable
                     ->url(fn (Bonde $record): string => route('achats.create', ['bonde' => $record , 'type' => 'entry']))
                     ->openUrlInNewTab(false)
                     ->button()
+                    ->icon('heroicon-o-pencil')
+                    ->color('info')
                     ->disabled(fn (Bonde $bonde) => $bonde->status)
                     ->openUrlInNewTab()
             ])
