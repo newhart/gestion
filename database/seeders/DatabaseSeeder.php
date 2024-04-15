@@ -16,12 +16,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Admin',
-        //     'email' => 'admin@shop.com',
-        //      'password' => 'password'
-        // ]);
-        $this->migrateProduct();
+        \App\Models\User::factory()->create([
+            'name' => 'Admin',
+            'email' => 'admin@shop.com',
+            // 'password' => 'password'
+        ]);
+        // $this->migrateProduct();
     }
 
     private function migrateProduct()
