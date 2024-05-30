@@ -26,13 +26,13 @@ class ListEntry extends Component implements HasForms, HasTable
     {
 
         return $table
-            ->query(Bonde::query()->where('type', 'entry')->where('is_confirm' , true)->whereHas('entries'))
+            ->query(Bonde::query()->where('type', 'entry')->where('is_confirm', true)->whereHas('entries'))
             ->columns([
                 TextColumn::make('num')
                     ->label('Numéro du bon de livraison')
                     ->searchable(),
                 IconColumn::make('status')
-                    ->label('Statut de validation')
+                    ->label('Status de validation')
                     ->boolean(),
                 TextColumn::make('created_at')
                     ->label("Date d'entrée")
@@ -78,7 +78,7 @@ class ListEntry extends Component implements HasForms, HasTable
                         return view('modal.index', compact('bonde'));
                     })->modalSubmitAction(false),
                 Action::make('Modifier')
-                    ->url(fn (Bonde $record): string => route('achats.create', ['bonde' => $record , 'type' => 'entry']))
+                    ->url(fn (Bonde $record): string => route('achats.create', ['bonde' => $record, 'type' => 'entry']))
                     ->openUrlInNewTab(false)
                     ->button()
                     ->icon('heroicon-o-pencil')

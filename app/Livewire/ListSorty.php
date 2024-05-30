@@ -34,10 +34,10 @@ class ListSorty extends Component implements HasForms, HasTable
     {
 
         return $table
-            ->query(Bonde::query()->where('type' , 'sorty')->where('is_confirm' , true)->whereHas('sorties'))
+            ->query(Bonde::query()->where('type', 'sorty')->where('is_confirm', true)->whereHas('sorties'))
             ->columns([
                 TextColumn::make('num')
-                    ->label('Numéro de la bande de livraison')
+                    ->label('Numéro du bon de livraison')
                     ->searchable(),
                 IconColumn::make('status')
                     ->label('Status de validation')
@@ -51,7 +51,7 @@ class ListSorty extends Component implements HasForms, HasTable
                 Filter::make('created_at')
                     ->form([
                         DatePicker::make('date_vente')
-                        ->label('Date de vente'),
+                            ->label('Date de vente'),
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
@@ -72,8 +72,8 @@ class ListSorty extends Component implements HasForms, HasTable
                             ->when(
                                 $data['category'],
                                 function (Builder $query, $date): Builder {
-                                    return $query->whereHas('sorties', function($query) use($date){
-                                        $query->where('category_id' , $date);
+                                    return $query->whereHas('sorties', function ($query) use ($date) {
+                                        $query->where('category_id', $date);
                                     });
                                 },
                             );
@@ -90,39 +90,38 @@ class ListSorty extends Component implements HasForms, HasTable
                     ->label('Valider')
                     ->color('success')
                     ->action(function (Bonde $bonde) {
-                        $bonde  = Bonde::where('id' , $bonde->id)->with(['sorties'=> function($query){
+                        $bonde  = Bonde::where('id', $bonde->id)->with(['sorties' => function ($query) {
                             $query->with('product');
                         }])->first();
                         foreach ($bonde->sorties as $sorty) {
                             $product = Product::find($sorty->product_id);
-                            if($product){
-                                $product->stock_quantity -= $sorty->quantity ; // delete la qty
+                            if ($product) {
+                                $product->stock_quantity -= $sorty->quantity; // delete la qty
                                 $product->save();
                             }
                         }
-                        $bonde->status = true ;
+                        $bonde->status = true;
                         $bonde->save();
                         $this->dispatch('alert', type: 'success', message: 'Validation fait avec success');
                     }),
                 Action::make('Détail')
                     ->button()
                     ->icon('heroicon-o-user')
-                    ->modalContent(function(Bonde $bonde)
-                    {
-                        $bonde = Bonde::where('id', $bonde->id)->with(['sorties' => function($query){
+                    ->modalContent(function (Bonde $bonde) {
+                        $bonde = Bonde::where('id', $bonde->id)->with(['sorties' => function ($query) {
                             $query->with('product');
                         }])->first();
 
                         return view('modal.index', compact('bonde'));
-                    })->modalSubmitAction(false) ,
-                 Action::make('Modifier')
-                     ->url(fn (Bonde $record): string => route('achats.create', ['bonde' => $record , 'type' => 'sorty']))
-                     ->openUrlInNewTab(false)
-                     ->button()
-                     ->icon('heroicon-o-pencil')
-                     ->color('info')
-                     ->disabled(fn (Bonde $bonde) => $bonde->status)
-                     ->openUrlInNewTab()
+                    })->modalSubmitAction(false),
+                Action::make('Modifier')
+                    ->url(fn (Bonde $record): string => route('achats.create', ['bonde' => $record, 'type' => 'sorty']))
+                    ->openUrlInNewTab(false)
+                    ->button()
+                    ->icon('heroicon-o-pencil')
+                    ->color('info')
+                    ->disabled(fn (Bonde $bonde) => $bonde->status)
+                    ->openUrlInNewTab()
             ])
             ->bulkActions([
                 // ...

@@ -41,7 +41,7 @@ class CreateEntry extends Component implements HasForms
     {
         if ($this->is_new) {
             return $form->schema([
-                TextInput::make('name')->label('Nom de la produit')
+                TextInput::make('name')->label('Nom du produit')
                     ->placeholder('Nom du produit')->required(),
                 TextInput::make('code')
                     ->label('Code barre')

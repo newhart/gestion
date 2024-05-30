@@ -13,8 +13,8 @@
                         </a>
                         <!--end::Logo-->
                         <span class="d-flex flex-column align-items-md-end opacity-70">
-                            <span>Cecilia Chapman, 711-2880 Nulla St, Mankato</span>
-                            <span>Mississippi 96522</span>
+                            <span>Andrefan'ambohijanahary</span>
+                            <span>Antananarivo</span>
                         </span>
                     </div>
                 </div>
@@ -31,7 +31,7 @@
                     </div>
 
                     <div class="d-flex flex-column flex-root">
-                        <span class="font-weight-bolder mb-2">Statuts : </span>
+                        <span class="font-weight-bolder mb-2">Status : </span>
                         @if (!$bonde->status)
                             <span class="opacity-70  bg-gray-500 text-white w-[100px] px-3 pl-7 rounded-xl py-2">En
                                 attente</span>
@@ -64,9 +64,9 @@
                     </div>
                     <div class="modal-body">
                         @if ($type === 'entry')
-                            @livewire('create-entry' , ['item' => false , 'bonde_id' => $idBonde])
+                            @livewire('create-entry', ['item' => false, 'bonde_id' => $idBonde])
                         @else
-                            @livewire('create-sorty' , ['item' => false , 'bondeId' => $idBonde])
+                            @livewire('create-sorty', ['item' => false, 'bondeId' => $idBonde])
                         @endif
 
                     </div>
@@ -90,43 +90,47 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($data as  $item)
+                                @foreach ($data as $item)
                                     @if (gettype($item) === 'array')
                                         <tr class="font-weight-boldest">
                                             <td class="pl-0 pt-7">
-                                                {{ $item['product']['name']}}</td>
+                                                {{ $item['product']['name'] }}</td>
                                             <td class="pl-0 pt-7">
-                                                {{$item['product']['category']['name']}}
+                                                {{ $item['product']['category']['name'] }}
                                             <td class="text-right pt-7">
-                                                {{$item['quantity']}}
+                                                {{ $item['quantity'] }}
                                             <td class="pl-0 pt-7">
                                             <td class="pl-0 pt-7 flex px-4 gap-2">
                                                 <button class="btn btn-success" data-toggle="modal"
-                                                data-target="#exampleModalLong{{$item['id']}}" >Modifier</button>
-                                                <button class="btn btn-danger" type="button" wire:click.prevent="delete({{$item['id']}})">Supprimer</button>
+                                                    data-target="#exampleModalLong{{ $item['id'] }}">Modifier</button>
+                                                <button class="btn btn-danger" type="button"
+                                                    wire:click.prevent="delete({{ $item['id'] }})">Supprimer</button>
                                             </td>
                                         </tr>
-                                        <div class="modal fade" id="exampleModalLong{{$item['id']}}" data-backdrop="static" tabindex="-1" role="dialog"
-                                        aria-labelledby="staticBackdrop" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Modification d'un produit</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <i aria-hidden="true" class="ki ki-close"></i>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    @if ($type === 'entry')
-                                                        @livewire('create-entry' , ['item' => $item , 'bonde_id' => $idBonde])
-                                                    @else
-                                                        @livewire('create-sorty' , ['item' => $item , 'bondeId' => $idBonde])
-                                                    @endif
+                                        <div class="modal fade" id="exampleModalLong{{ $item['id'] }}"
+                                            data-backdrop="static" tabindex="-1" role="dialog"
+                                            aria-labelledby="staticBackdrop" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Modification d'un
+                                                            produit</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <i aria-hidden="true" class="ki ki-close"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        @if ($type === 'entry')
+                                                            @livewire('create-entry', ['item' => $item, 'bonde_id' => $idBonde])
+                                                        @else
+                                                            @livewire('create-sorty', ['item' => $item, 'bondeId' => $idBonde])
+                                                        @endif
 
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
                                     @endif
                                 @endforeach
 

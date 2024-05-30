@@ -33,10 +33,14 @@ class FormContent extends Component implements HasForms
                 Select::make('product_id')
                     ->label('Selectioner le produit')
                     ->options(Product::all()->pluck('name', 'id'))
+                    ->searchable()
+                    ->relationship('product',  'name')
                     ->reactive()
-                    ->afterStateUpdated(function (int $state, callable $set) {
+                    ->afterStateUpdated(function (int|null $state, callable $set) {
                         $product = Product::find($state);
-                        $set('price', $product->price);
+                        if ($product) {
+                            $set('price', $product->price);
+                        }
                     })
                     ->required(),
                 TextInput::make('price')
@@ -44,16 +48,22 @@ class FormContent extends Component implements HasForms
                     ->numeric()
                     ->placeholder('Prix')
                     ->disabled()
-                    ->required()  ,
+                    ->required(),
                 TextInput::make('qty')
                     ->label('Qty')
                     ->numeric()
                     ->placeholder('Qty')
                     ->reactive()
-                    ->afterStateUpdated(function(int $state , callable $set){
+                    ->afterStateUpdated(function (int|null $state, callable $set) {
                         $current_state = $this->form->getState();
                         $product = Product::find((int)$current_state['product_id']);
-                        $set('price', floatval($product->price) * floatval($state));
+                        if ($state) {
+                            if ($state >= 6) {
+                                $set('price', floatval($product->price_gros) * floatval($state));
+                            } else {
+                                $set('price', floatval($product->price) * floatval($state));
+                            }
+                        }
                     })
                     ->required(),
             ])
@@ -65,9 +75,9 @@ class FormContent extends Component implements HasForms
     {
         $data = $this->form->getState();
         $product = Product::find($data['product_id']);
-        if($product){
+        if ($product) {
             $data['facture_id'] = $this->facture->id;
-            $data['name'] = $product->name ;
+            $data['name'] = $product->name;
             unset($data['product_id']);
             $data['price'] = $product->price * (int) $data['qty'];
             $facture_content  = FactureContent::create($data);
@@ -82,7 +92,6 @@ class FormContent extends Component implements HasForms
                 $this->form->fill();
             }
         }
-
     }
 
 

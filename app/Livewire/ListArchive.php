@@ -42,6 +42,7 @@ class ListArchive extends Component implements HasForms, HasTable
                 Action::make('delete')
                     ->button()
                     ->icon('heroicon-o-trash')
+                    ->hidden(auth()->user()->role !== 'Admin')
                     ->requiresConfirmation()
                     ->label('supprimer')
                     ->color('danger')

@@ -50,6 +50,11 @@ class EditProduct extends Component implements HasForms
                             ->label('Prix')
                             ->placeholder('Ajouter la prix du produit')
                             ->required(),
+                        TextInput::make('price_gros')
+                            ->numeric()
+                            ->label('Prix de gros')
+                            ->placeholder('Ajouter la prix en gros du produit')
+                            ->required(),
                         TextInput::make('stock_quantity')
                             ->numeric()
                             ->label('Nombre')

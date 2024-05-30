@@ -11,8 +11,8 @@
                         <div>
                             <p>Layan cosmetics </p>
                             <p>Antananarivo</p>
-                            <p>Telephone : 032 69 206 94 </p>
-                            <p>Adresse : Lot IIH 61 FNN Tanjombato </p>
+                            <p>Telephone : +022 78 561 79 </p>
+                            <p>Adresse : Andrefan'ambohijanahary </p>
                         </div>
                     </div>
                     <div style="float: right; " id="right">
@@ -38,7 +38,7 @@
                 </div>
                 <div class="d-flex w-full flex-row-reverse">
                     <a href="" data-toggle="modal" data-target="#exampleModalLong"
-                        class="text-gray-800 btn btn-primary" id="text-ajout">Ajouter une autre produit</a>
+                        class="text-gray-800 btn btn-primary" id="text-ajout">Ajouter un autre produit</a>
                 </div>
 
                 <div class="modal fade" id="exampleModalLong" data-backdrop="static" tabindex="-1" role="dialog"
@@ -46,7 +46,7 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Ajouter une produit</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">Ajouter un produit</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <i aria-hidden="true" class="ki ki-close"></i>
                                 </button>
@@ -70,7 +70,7 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th class="pl-0 font-weight-bold text-muted text-uppercase">Nom de la produit</th>
+                                    <th class="pl-0 font-weight-bold text-muted text-uppercase">Nom du produit</th>
                                     <th class="text-right font-weight-bold text-muted text-uppercase">Qty</th>
                                     <th class="text-right font-weight-bold text-muted text-uppercase">Prix</th>
                                     <th class="text-right pr-0 font-weight-bold text-muted text-uppercase">Total</th>
@@ -107,7 +107,7 @@
         <div class="row justify-content-center py-8 px-8 py-md-10 px-md-0" id="footer-pdf">
             <div class="col-md-9">
                 <div class="d-flex justify-content-between">
-                    <a href="{{route('factures.index')}}" class="btn btn-light-primary font-weight-bold">Valider</a>
+                    <a href="{{ route('factures.index') }}" class="btn btn-light-primary font-weight-bold">Valider</a>
                     <button type="button" class="btn btn-primary font-weight-bold"
                         onclick="window.print()">Imprimer</button>
                 </div>

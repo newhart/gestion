@@ -44,7 +44,7 @@ class CreateBonde extends Component implements HasForms
     {
         return $form
             ->schema([
-                Section::make('Ajouter une bon de livraison')
+                Section::make('Ajouter un bon de livraison')
                     ->schema([
                         TextInput::make('num')
                             ->label('Numéro')
