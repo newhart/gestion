@@ -59,9 +59,9 @@ class FormContent extends Component implements HasForms
                         $product = Product::find((int)$current_state['product_id']);
                         if ($state) {
                             if ($state >= 6) {
-                                $set('price', floatval($product->price_gros) * floatval($state));
+                                $set('price', floatval($product->price_gros));
                             } else {
-                                $set('price', floatval($product->price) * floatval($state));
+                                $set('price', floatval($product->price));
                             }
                         }
                     })
@@ -78,16 +78,18 @@ class FormContent extends Component implements HasForms
         if ($product) {
             $data['facture_id'] = $this->facture->id;
             $data['name'] = $product->name;
-            unset($data['product_id']);
+            // unset($data['product_id']);
             $data['price'] = $product->price * (int) $data['qty'];
             $facture_content  = FactureContent::create($data);
+            // load product in facture content
+            $facture_content->load('product');
             if ($facture_content) {
                 $this->data[] = [
                     'name' => $facture_content->name,
                     'qty' => $facture_content->qty,
-                    'price' => $facture_content->price
+                    'price' => $facture_content->product?->price
                 ];
-                $facture = $this->facture->load('contents');
+                $facture = $this->facture->load('contents.product');
                 $this->dispatch('up', $facture);
                 $this->form->fill();
             }

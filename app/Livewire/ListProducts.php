@@ -26,6 +26,14 @@ class ListProducts extends Component implements HasForms, HasTable
                 TextColumn::make('name')
                     ->label('Nom du produit')
                     ->searchable(),
+                // price in ar
+                TextColumn::make('price')
+                    ->getStateUsing(fn ($record) => number_format($record->price, 2, ',', ' ') . ' Ar')
+                    ->label('Prix de détail'),
+                // prix gros
+                TextColumn::make('price_gros')
+                    ->getStateUsing(fn ($record) => number_format($record->price_gros, 2, ',', ' ') . ' Ar')
+                    ->label('Prix de gros'),
                 TextColumn::make('stock_quantity')
                     ->label('Quantité'),
                 TextColumn::make('category.name')

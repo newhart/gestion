@@ -24,7 +24,7 @@ class CreateInfoFacture extends Component
     public function mount(Facture $facture)
     {
         $this->facture = $facture;
-        $this->data = $facture->load('contents')->toArray();
+        $this->data = $facture->load('contents.product')->toArray();
     }
     public function render()
     {
@@ -35,7 +35,7 @@ class CreateInfoFacture extends Component
     {
 
         return  response()->streamDownload(function () use ($facture) {
-            $facture->load('contents');
+            $facture->load('contents.product');
             echo Pdf::loadHtml(
                 Blade::render('facture-show', ['facture' => $facture])
             )

@@ -15,4 +15,9 @@ class FactureContent extends Model
     {
         return $this->belongsTo(Facture::class);
     }
+
+    public function product(): BelongsTo
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

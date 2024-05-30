@@ -42,9 +42,9 @@ class EditProduct extends Component implements HasForms
                         Select::make('category')
                             ->searchable()
                             ->relationship('category',  'name'),
-                        Select::make('company')
-                            ->searchable()
-                            ->relationship('company',  'name'),
+                        // Select::make('company')
+                        //     ->searchable()
+                        //     ->relationship('company',  'name'),
                         TextInput::make('price')
                             ->numeric()
                             ->label('Prix')
@@ -78,12 +78,10 @@ class EditProduct extends Component implements HasForms
     {
         $data = $this->form->getState();
         $category = Category::findOrFail($data['category']);
-        $company = Company::findOrFail($data['company']);
-        if ($category && $company) {
+        if ($category) {
             $data['category_id'] = $category->id;
-            $data['company_id'] = $company->id;
             unset($data['category']);
-            unset($data['company']);
+            // unset($data['company']);
         }
         $this->record->update($data);
         $this->form->model($this->record)->saveRelationships();

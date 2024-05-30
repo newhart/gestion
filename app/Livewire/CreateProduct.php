@@ -34,6 +34,16 @@ class CreateProduct extends Component implements HasForms
                             ->label('Nom')
                             ->placeholder('Ajouter le nom du produit')
                             ->required(),
+                        TextInput::make('price')
+                            ->numeric()
+                            ->label('Prix')
+                            ->placeholder('Ajouter la prix du produit')
+                            ->required(),
+                        TextInput::make('price_gros')
+                            ->numeric()
+                            ->label('Prix de gros')
+                            ->placeholder('Ajouter la prix en gros du produit')
+                            ->required(),
                         Select::make('category')
                             ->label('Catégorie')
                             ->required()

@@ -82,11 +82,14 @@
                                     <tr class="font-weight-boldest {{ $key !== 0 ?? 'border-bottom-0' }}">
                                         <td class="pl-0 pt-7">{{ $content['name'] }}</td>
                                         <td class="text-right pt-7">{{ $content['qty'] }}</td>
-                                        <td class="text-right pt-7">{{ $content['price'] }} Ar</td>
+                                        <td class="text-right pt-7">
+                                            {{ $content['product'] ? $content['product']['price'] : $content['price'] }}
+                                            Ar</td>
                                         <td class="text-danger pr-0 pt-7 text-right">
-                                            {{ $content['qty'] * $content['price'] }} Ar</td>
+                                            {{ $content['product'] ? $content['qty'] * $content['product']['price'] : $content['qty'] * $content['price'] }}
+                                            Ar</td>
                                     </tr>
-                                    @php $total+= $content['qty'] *  $content['price'];  @endphp
+                                    @php $total+= $content['product'] ? $content['qty'] * $content['product']['price'] : $content['qty'] * $content['price'];  @endphp
                                 @endforeach
 
                                 <tr class="font-weight-boldest border-bottom-0 mb-4 text-end">

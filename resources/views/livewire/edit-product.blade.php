@@ -7,7 +7,7 @@
                     <button type="submit" class="btn btn-primary mt-3">
                         Modifier
                     </button>
-                    <a href="{{route('products.list')}}" class="btn btn-secondary mt-3 mr-4">
+                    <a href="{{ route('products.list') }}" class="btn btn-secondary mt-3 mr-4 mx-4">
                         Annuler
                     </a>
                 </div>
@@ -15,5 +15,5 @@
             <x-filament-actions::modals />
         </div>
     </div>
-    
+
 </div>
